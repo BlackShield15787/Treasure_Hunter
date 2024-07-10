@@ -5,11 +5,13 @@ using Vuforia;
 
 public class SpawnScript : MonoBehaviour
 {
-    public GameObject Bone;
+    public GameObject Prefab;
+    public int maxClones = 1;
+    private int currentClones = 0;
     private bool SetPosition()
     {
         Transform cam = Camera.main.transform;
-        GameObject obj = Instantiate(Bone, cam.forward * 10, Quaternion.identity);
+        GameObject obj = Instantiate(Prefab, cam.forward * 10, Quaternion.identity);
         return true;
     }
     private bool mPositionSet;
@@ -30,5 +32,15 @@ public class SpawnScript : MonoBehaviour
             }
         }
     }
-
+    void Update()
+    {
+        if (currentClones < maxClones)
+        {
+            // Generar un nuevo clone del objeto prefab
+            GameObject clone = Instantiate(Prefab, transform.position, transform.rotation);
+            currentClones++;
+        }
+    }
 }
+
+
